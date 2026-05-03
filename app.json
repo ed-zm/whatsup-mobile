@@ -1,0 +1,37 @@
+{
+  "expo": {
+    "name": "WhatsUp",
+    "slug": "whatsup-mobile",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "scheme": "whatsup",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.whatsup.mobile",
+      "infoPlist": {
+        "NSCameraUsageDescription": "WhatsUp usa la camara para tomar fotos y enviarlas en tus chats.",
+        "NSContactsUsageDescription": "WhatsUp usa tus contactos para mostrarte que personas ya tienen la app.",
+        "NSPhotoLibraryUsageDescription": "WhatsUp usa tu galeria para seleccionar fotos y enviarlas en tus chats."
+      }
+    },
+    "android": {
+      "package": "com.whatsup.mobile",
+      "permissions": [
+        "CAMERA",
+        "READ_MEDIA_IMAGES",
+        "READ_CONTACTS"
+      ],
+      "adaptiveIcon": {
+        "backgroundColor": "#075E54"
+      }
+    },
+    "plugins": [
+      "expo-sqlite",
+      "expo-secure-store",
+      "expo-contacts",
+      "expo-image-picker",
+      "expo-camera"
+    ]
+  }
+}
