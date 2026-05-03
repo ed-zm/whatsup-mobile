@@ -45,7 +45,7 @@ export async function syncDeviceContacts() {
     return { syncedCount: 0 };
   }
 
-  const response = await apiClient.post<ContactsSyncResponse>('/api/contacts/sync', {
+  const response = await apiClient.post<ContactsSyncResponse>('/contacts/sync', {
     contacts: deviceContacts,
   });
   const syncedContacts = mapApiContacts(

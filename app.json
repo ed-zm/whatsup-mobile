@@ -10,6 +10,9 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.whatsup.mobile",
       "infoPlist": {
+        "NSAppTransportSecurity": {
+          "NSAllowsLocalNetworking": true
+        },
         "NSCameraUsageDescription": "WhatsUp usa la camara para tomar fotos y enviarlas en tus chats.",
         "NSContactsUsageDescription": "WhatsUp usa tus contactos para mostrarte que personas ya tienen la app.",
         "NSPhotoLibraryUsageDescription": "WhatsUp usa tu galeria para seleccionar fotos y enviarlas en tus chats."
@@ -17,6 +20,7 @@
     },
     "android": {
       "package": "com.whatsup.mobile",
+      "usesCleartextTraffic": true,
       "permissions": [
         "CAMERA",
         "READ_MEDIA_IMAGES",

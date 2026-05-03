@@ -88,7 +88,7 @@ export async function uploadPhotoToS3(
 }
 
 async function getPresignedUrl(photo: PickedPhoto) {
-  const response = await apiClient.get<PresignedUrlResponse>('/api/media/presigned-url', {
+  const response = await apiClient.get<PresignedUrlResponse>('/media/presigned-url', {
     params: {
       contentType: photo.mimeType,
       fileName: photo.fileName,

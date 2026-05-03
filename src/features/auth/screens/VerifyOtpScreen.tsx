@@ -3,6 +3,8 @@ import { AxiosError } from 'axios';
 import { useRef, useState } from 'react';
 import {
   ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -46,7 +48,10 @@ export function VerifyOtpScreen({ route }: Props) {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior={Platform.select({ ios: 'padding', android: 'height' })}
+      style={styles.container}
+    >
       <View style={styles.content}>
         <Text style={styles.title}>Verificando tu numero</Text>
         <Text style={styles.description}>
@@ -73,23 +78,23 @@ export function VerifyOtpScreen({ route }: Props) {
         />
 
         {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
-      </View>
 
-      <Pressable
-        disabled={!canSubmit || isSubmitting}
-        onPress={handleVerifyOtp}
-        style={({ pressed }) => [
-          styles.button,
-          (!canSubmit || isSubmitting || pressed) && styles.buttonDisabled,
-        ]}
-      >
-        {isSubmitting ? (
-          <ActivityIndicator color="#0B141A" />
-        ) : (
-          <Text style={styles.buttonText}>Verificar</Text>
-        )}
-      </Pressable>
-    </View>
+        <Pressable
+          disabled={!canSubmit || isSubmitting}
+          onPress={handleVerifyOtp}
+          style={({ pressed }) => [
+            styles.button,
+            (!canSubmit || isSubmitting || pressed) && styles.buttonDisabled,
+          ]}
+        >
+          {isSubmitting ? (
+            <ActivityIndicator color="#0B141A" />
+          ) : (
+            <Text style={styles.buttonText}>Verificar</Text>
+          )}
+        </Pressable>
+      </View>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -107,7 +112,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#25D366',
     borderRadius: 24,
-    marginBottom: 32,
+    marginTop: 32,
     minWidth: 132,
     paddingHorizontal: 24,
     paddingVertical: 12,
@@ -124,7 +129,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
     flex: 1,
-    justifyContent: 'space-between',
   },
   content: {
     alignItems: 'center',

@@ -14,17 +14,17 @@ type VerifyOtpResponse = {
 };
 
 export async function generateOtp(phoneNumber: string) {
-  const response = await apiClient.post<GenerateOtpResponse>('/api/auth/otp', {
+  const response = await apiClient.post<GenerateOtpResponse>('/auth/send-sms', {
     phoneNumber,
   });
-
+  console.log('response', response);
   return response.data;
 }
 
 export async function verifyOtp(phoneNumber: string, code: string) {
-  const response = await apiClient.post<VerifyOtpResponse>('/api/auth/otp/verify', {
+  const response = await apiClient.post<VerifyOtpResponse>('/auth/verify-sms', {
     phoneNumber,
-    code,
+    otpCode: code,
   });
   const jwt = response.data.jwt ?? response.data.token ?? response.data.accessToken;
 

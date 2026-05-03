@@ -4,6 +4,7 @@
   "private": true,
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "bot": "node bot.js",
     "start": "expo start",
     "start:go": "expo start --go",
     "start:dev-client": "expo start --dev-client",
@@ -34,6 +35,7 @@
     "zustand": "latest"
   },
   "devDependencies": {
+    "ws": "^8.18.0",
     "@expo/cli": "54.0.24",
     "@types/react": "latest",
     "babel-plugin-module-resolver": "latest",

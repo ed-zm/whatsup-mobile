@@ -38,6 +38,7 @@ export function PhoneInputScreen({ navigation }: Props) {
       await generateOtp(phoneNumber);
       navigation.navigate('VerifyOtp', { phoneNumber });
     } catch (error) {
+      console.log('generateOtp error', error);
       setErrorMessage(getAuthErrorMessage(error));
     } finally {
       setIsSubmitting(false);
@@ -46,7 +47,7 @@ export function PhoneInputScreen({ navigation }: Props) {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.select({ ios: 'padding', android: undefined })}
+      behavior={Platform.select({ ios: 'padding', android: 'height' })}
       style={styles.container}
     >
       <View style={styles.content}>
@@ -80,28 +81,37 @@ export function PhoneInputScreen({ navigation }: Props) {
         </View>
 
         {errorMessage ? <Text style={styles.errorText}>{errorMessage}</Text> : null}
-      </View>
 
-      <Pressable
-        disabled={!canSubmit || isSubmitting}
-        onPress={handleSubmit}
-        style={({ pressed }) => [
-          styles.button,
-          (!canSubmit || isSubmitting || pressed) && styles.buttonDisabled,
-        ]}
-      >
-        {isSubmitting ? (
-          <ActivityIndicator color="#0B141A" />
-        ) : (
-          <Text style={styles.buttonText}>Siguiente</Text>
-        )}
-      </Pressable>
+        <Pressable
+          disabled={!canSubmit || isSubmitting}
+          onPress={handleSubmit}
+          style={({ pressed }) => [
+            styles.button,
+            (!canSubmit || isSubmitting || pressed) && styles.buttonDisabled,
+          ]}
+        >
+          {isSubmitting ? (
+            <ActivityIndicator color="#0B141A" />
+          ) : (
+            <Text style={styles.buttonText}>Siguiente</Text>
+          )}
+        </Pressable>
+      </View>
     </KeyboardAvoidingView>
   );
 }
 
 function getAuthErrorMessage(error: unknown) {
   if (error instanceof AxiosError) {
+    const isNetwork =
+      error.code === 'ERR_NETWORK' ||
+      error.message === 'Network Error' ||
+      (!error.response && !!error.request);
+
+    if (isNetwork) {
+      return 'Sin conexion al servidor. Revisa EXPO_PUBLIC_API_URL (o EXPO_PUBLIC_API_BASE_URL) en `.env`, que el backend escuche en esa IP/puerto, y reinicia Expo.';
+    }
+
     return error.response?.data?.message ?? 'No pudimos enviar el codigo. Intentalo de nuevo.';
   }
 
@@ -114,7 +124,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#25D366',
     borderRadius: 24,
-    marginBottom: 32,
+    marginTop: 32,
     minWidth: 132,
     paddingHorizontal: 24,
     paddingVertical: 12,
@@ -131,7 +141,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#FFFFFF',
     flex: 1,
-    justifyContent: 'space-between',
   },
   content: {
     padding: 24,
